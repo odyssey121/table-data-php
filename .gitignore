@@ -1,0 +1,7 @@
+.idea/
+.vscode/
+logs/
+/backend/composer.lock
+/backend/vendor
+/frontend/node_modules
+/frontend/.nuxt
