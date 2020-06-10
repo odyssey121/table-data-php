@@ -1,8 +1,15 @@
 <?php
-$a='sdfsd';
 
-var_dump($_SERVER['REQUEST_URI']);
-var_dump($_SERVER['REQUEST_METHOD']);
-var_dump($_GET);
-var_dump($_POST);
+use Api\DistanceApi;
+
+require_once "Api/DistanceApi.php";
+require_once "Db.php";
+
+
+try {
+    $result = (new DistanceApi(new Db()))->run();
+    echo $result;
+} catch (Exception $e) {
+    echo json_encode(array('error' => $e->getMessage()));
+}
 ?>

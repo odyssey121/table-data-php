@@ -1,5 +1,6 @@
 version: "2"
-
+volumes:
+    db-data:
 services:
     web:
         restart: always
@@ -26,6 +27,11 @@ services:
             - ./logs/php-fpm/:/tmp/xdebug_log
         networks:
             - php-network
+        environment:
+            POSTGRES_DB: "mysite"
+            POSTGRES_USER: "mysiteuser"
+            POSTGRES_PASSWORD: "mysitepass"
+            POSTGRES_DB_HOST: "postgresql"
     composer:
         image: composer
         volumes:
@@ -33,6 +39,31 @@ services:
         command: install
         depends_on:
             - php
+    postgresql:
+        build:
+            context: ./db
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_DB: "mysite"
+            POSTGRES_USER: "mysiteuser"
+            POSTGRES_PASSWORD: "mysitepass"
+            POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
+        volumes:
+            - db-data:/var/lib/postgresql/data
+        networks:
+            - php-network
+
+    adminer:
+        image: adminer
+        container_name: nuxt-django-postgresql.adminer
+        restart: always
+        ports:
+            - 8888:8080
+        depends_on:
+            - postgresql
+        networks:
+            - php-network
     nuxt:
         build:
             context: ./frontend
@@ -43,6 +74,9 @@ services:
         command: bash -c "npm install && npm run dev"
         networks:
             - php-network
+        depends_on:
+            - postgresql
+
 
 
 networks:
