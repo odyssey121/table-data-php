@@ -2,6 +2,16 @@ version: "2"
 volumes:
     db-data:
 services:
+    nuxt:
+        build:
+            context: ./frontend
+        volumes:
+            - ./frontend:/app
+        ports:
+            - 3000:3000
+        command: bash -c "npm install && npm run dev"
+        networks:
+            - php-network
     web:
         restart: always
         image: nginx:latest
@@ -64,18 +74,9 @@ services:
             - postgresql
         networks:
             - php-network
-    nuxt:
-        build:
-            context: ./frontend
-        volumes:
-            - ./frontend:/app
-        ports:
-            - 3000:3000
-        command: bash -c "npm install && npm run dev"
-        networks:
-            - php-network
-        depends_on:
-            - postgresql
+
+
+
 
 
 

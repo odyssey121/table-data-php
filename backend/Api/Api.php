@@ -49,7 +49,6 @@ abstract class Api
         //Определение действия для обработки
         $this->action = $this->getAction();
 
-        //Если метод(действие) определен в дочернем классе API
         if (method_exists($this, $this->action)) {
             return $this->{$this->action}();
         } else {
@@ -74,15 +73,15 @@ abstract class Api
                     return 'indexAction';
                 }
                 break;
-            case 'POST':
-                return 'createAction';
-                break;
-            case 'PUT':
-                return 'updateAction';
-                break;
-            case 'DELETE':
-                return 'deleteAction';
-                break;
+//            case 'POST':
+//                return 'createAction';
+//                break;
+//            case 'PUT':
+//                return 'updateAction';
+//                break;
+//            case 'DELETE':
+//                return 'deleteAction';
+//                break;
             default:
                 return null;
         }
@@ -99,7 +98,7 @@ abstract class Api
         return ($status[$code]) ? $status[$code] : $status[500];
     }
 
-    protected function response($data, $status = 500)
+    protected function response($data, $status = 200)
     {
         header("HTTP/1.1 " . $status . " " . $this->requestStatus($status));
         return json_encode($data, JSON_PRETTY_PRINT);

@@ -27,7 +27,8 @@ class DistanceApi extends Api
         $distances = [];
         $db_conn = ($this->db)->getConnect();
         $searchExpression = "%" . $this->requestParams['search'] . "%";
-        $sth = $db_conn->query("SELECT * FROM distance WHERE distance.name LIKE '$searchExpression';");
+        $sth = $db_conn
+            ->query("SELECT * FROM distance WHERE distance.name LIKE '$searchExpression' ORDER BY date DESC;");
         while ($row = $sth->fetch(\PDO::FETCH_ASSOC)) {
             $distances[] = [
                 'id' => $row['id'],
@@ -50,8 +51,9 @@ class DistanceApi extends Api
         if (isset($this->requestParams['min'])) {
             $query_str .= isset($this->requestParams['max']) ?
                 "AND $filter >= {$this->requestParams['min']}" :
-                "WHERE $filter >= {$this->requestParams['min']};";
+                "WHERE $filter >= {$this->requestParams['min']}";
         }
+        $query_str .= "ORDER BY date DESC;";
         $distances = [];
         try {
             $db_conn = ($this->db)->getConnect();

@@ -5,30 +5,43 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: process.env.npm_package_name || '',
+    title: process.env.npm_package_name || 'table-distance',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: process.env.npm_package_description || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/icon?family=Material+Icons"
+      },
     ]
   },
+  axios: {
+    baseURL: 'http://web:8080/',
+    browserBaseURL: 'http://localhost:8080/',
+    headers: {
+      common: {
+        "Content-Type": "application/json",
+        'Access-Control-Allow-Origin': '*',
+      }
+    }
+  },
+
   /*
   ** Customize the progress-bar color
   */
-  loading: { color: '#fff' },
+  loading: false,
   /*
   ** Global CSS
   */
-  css: [
-  ],
+  css: ["assets/style/main.css"],
   /*
   ** Plugins to load before mounting the App
   */
-  plugins: [
-  ],
+  plugins: ['~plugins/ui-components.js'],
   /*
   ** Nuxt.js dev-modules
   */
@@ -38,15 +51,36 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    // Doc: https://axios.nuxtjs.org/usage
-    '@nuxtjs/axios',
+    "@nuxtjs/axios",
+    "nuxt-quasar",
   ],
-  /*
-  ** Axios module configuration
-  ** See https://axios.nuxtjs.org/options
-  */
-  axios: {
+
+  // quasar css components
+  quasar: {
+    framework: {
+      iconSet: "fontawesome-v5",
+      components: [
+        'QSelect',
+        "QList",
+        "QItem",
+        "QForm",
+        "QInput",
+        "QIcon",
+        "QBtn",
+        "QBtnToggle",
+        "QItemSection"
+      ],
+      cssAddon: true
+    },
+    supportIE: true,
+    htmlVariables: {}
   },
+
+  router: {
+    linkActiveClass: 'active'
+  },
+
+
   /*
   ** Build configuration
   */
@@ -54,7 +88,7 @@ export default {
     /*
     ** You can extend webpack config here
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
     }
   }
 }
