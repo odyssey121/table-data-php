@@ -9,11 +9,13 @@
     $ затем docker-compose exec php ./vendor/bin/phinx seed:run
     $ пересобираем docker-compose up --build 
 
+
   
  - Nginx APP : http://localhost:8080
 
  Если не будет открываться http://localhost:8080 тогда
  удалите node_modules из frontend и пересабирите docker-compose up --build
+
 
 
 ## Автор
