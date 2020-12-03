@@ -74,15 +74,7 @@
     </div>
   </div>
 </template>
-      </div>
-      
-    </div>
-  </div>
-</template>
 
-    </div>
-  </div>
-</template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
